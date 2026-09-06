@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anirudh Bhattacharya — Physical Design</title>
+  <meta name="description" content="Physical Design Application Engineer. Fusion Compiler and ICC2 implementation, CTS, timing, UPF, and signoff-class debug on TSMC N5A customer databases." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="logo" href="#home">Bhattacharya / PD</a>
+    <button class="menu-btn" aria-label="Menu">☰</button>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#bring">Value</a>
+      <a href="#proof">Proof</a>
+      <a href="#notes">Notes</a>
+      <a href="#accounts">Accounts</a>
+      <a href="#scope">Scope</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <p class="kicker">Physical Design · Synopsys · Hyderabad</p>
+    <h1>I unblock live<br>P&amp;R databases.</h1>
+    <p class="lede">
+      Fusion Compiler and ICC2 implementation support on customer ASIC / SoC blocks —
+      compile, placement, CTS, routing, UPF, STA, and Calibre-class PV —
+      including TSMC N5A. One Qualcomm failure became a testcase PD teams still reuse.
+    </p>
+    <div class="cta">
+      <a class="btn btn-gold" href="#proof">See the proof</a>
+      <a class="btn btn-line" href="Anirudh_Bhattacharya_Resume_PD.pdf" download>Resume</a>
+    </div>
+  </section>
+
+  <div class="band">
+    <div><strong>100+</strong><span>Production P&amp;R cases</span></div>
+    <div><strong>N5A</strong><span>TSMC FinFET-class</span></div>
+    <div><strong>30+</strong><span>SolvNet articles</span></div>
+    <div><strong>Award</strong><span>Excellence, Mar 2026</span></div>
+  </div>
+
+  <section id="bring">
+    <h2>What a product PD team actually gets</h2>
+    <p class="intro">
+      I am an Application Engineer, not a fake block-owner. The useful part for NVIDIA / Broadcom / Qualcomm / Arm / Google
+      is that I have already sat in the same failures their teams hit on FC and ICC2.
+    </p>
+    <div class="cases">
+      <article><h3>Timing / CTS</h3><p>clock_opt, MSCTS crashes, generated clocks, clock mux / gating, NDR on leaf clocks, useful skew / CCD, FC vs ICC2 skew mismatch.</p></article>
+      <article><h3>Congestion / route</h3><p>IP-edge congestion, magnet placement, legalizer / poly rules, hyper_route_opt, via-ladder, off-grid M2, power-domain routing.</p></article>
+      <article><h3>Low power</h3><p>UPF, always-on switch, split fanout, toggle-rate power, signal EM — the cases that stall a signoff review.</p></article>
+      <article><h3>Signoff-class</h3><p>PVT mismatch, over-buffering, max fanout, Calibre-class DRC/LVS, NDM / TLU+ / tech file, hierarchical abstracts.</p></article>
+    </div>
+  </section>
+
+  <section id="proof">
+    <h2>Three things that survive a 4-second skim</h2>
+    <div class="cards">
+      <article class="card">
+        <p class="sub">01 · Methodology</p>
+        <h3>Qualcomm P&amp;R → reused testcase</h3>
+        <p>A live Fusion Compiler place-and-route failure was isolated, reduced, and packaged as GSAE command-trace. PD and AE teams reused it as a production check. Excellence Award, March 2026.</p>
+        <p class="meta">Problem → reduced testcase → team reuse. That is the muscle product CAD groups hire.</p>
+      </article>
+      <article class="card">
+        <p class="sub">02 · Queue</p>
+        <h3>100+ implementation cases, N5A in the mix</h3>
+        <p>Q1’26: 16 cases, zero backlog, ~10.8 days. Q2’26: 30+ FC / ICC2 cases, ~11 days. Nodes called out in work: TSMC N5A, 40ULP, 180G. Written up as 30+ SolvNet Plus articles.</p>
+        <p class="meta">Not a training lab. Customer databases, closed.</p>
+      </article>
+      <article class="card">
+        <p class="sub">03 · PPA exploration</p>
+        <h3>DSO.ai on PVT Sensor IP</h3>
+        <p>Ran DSO.ai with Fusion Compiler on a hard-IP class block for timing / power / QoR during the internship that converted to full-time AE. Same stack I debug for customers now.</p>
+        <p class="meta">Apr 2024 intern → Apr 2025 AE. Still in the role.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="notes">
+    <h2>What customers wrote after close-out</h2>
+    <p class="intro">Exact notes from Q3’26. Company only.</p>
+    <div class="quotes">
+      <article class="quote">
+        <p>“Thanks for the answers. It is clear now. Thanks to close the call.”</p>
+        <p class="meta">Microsoft · July 2026</p>
+      </article>
+      <article class="quote">
+        <p>“Thank you for your help. It is very helpful to me. Please this case can be closed.”</p>
+        <p class="meta">Samsung Electronics · August 2026</p>
+      </article>
+      <article class="quote">
+        <p>“Issue is solved. Can you please close the ticket. Thank you for the support.”</p>
+        <p class="meta">HCL · July 2026</p>
+      </article>
+      <article class="quote">
+        <p>“Thank you for your help. It runs ok now. Please feel free to close this case.”</p>
+        <p class="meta">ScaleFlux · May 2026</p>
+      </article>
+      <article class="quote">
+        <p>“Sure please go ahead and close the case. Thank you very much.”</p>
+        <p class="meta">SiMa Technologies · June 2026</p>
+      </article>
+      <article class="quote">
+        <p>“Thanks for the explanation! You can close the ticket.”</p>
+        <p class="meta">Chipbus · June 2026</p>
+      </article>
+    </div>
+    <div class="survey">
+      <p class="sub" style="margin-top:0">Survey</p>
+      <p>Completed Technical Support survey from Chipbus, July 2026 — perfect score.</p>
+    </div>
+  </section>
+
+  <section id="accounts">
+    <h2>Databases I have already opened</h2>
+    <p class="intro">Product and foundry accounts from Fusion Compiler / ICC2 cases. Training labs omitted.</p>
+    <p class="sub">Product and foundry</p>
+    <div class="logo-grid">
+      <span>Samsung</span><span>Qualcomm</span><span>MediaTek</span><span>Micron</span>
+      <span>SK hynix</span><span>Intel</span><span>Microsoft</span><span>Marvell</span>
+      <span>NXP</span><span>Arm</span><span>ST</span><span>Toshiba</span>
+      <span>Sony</span><span>GlobalFoundries</span><span>SiFive</span><span>SemiFive</span>
+      <span>Novatek</span><span>Nuvoton</span>
+    </div>
+    <p class="sub">Design houses</p>
+    <div class="logo-grid">
+      <span>SiMa.ai</span><span>Movellus</span><span>Element Labs</span>
+      <span>Xcelerium</span><span>ScaleFlux</span><span>L&amp;T Semiconductor</span>
+      <span>HCL</span><span>Wipro</span><span>MIPS</span>
+    </div>
+  </section>
+
+  <section id="scope">
+    <div class="split" style="margin-bottom:28px">
+      <div>
+        <h2>Stack</h2>
+        <p class="intro">Day-to-day: Fusion Compiler, ICC2, PrimeTime, DSO.ai, Calibre-class PV, Tcl / Python. Hierarchical NDM/LEF, DFT FC RM, PrimeTime RM.</p>
+      </div>
+      <img src="metal.jpg" alt="Metal stack" />
+    </div>
+    <div class="split">
+      <img src="cts.jpg" alt="Clock tree" />
+      <div>
+        <h2>Path</h2>
+        <ol class="timeline">
+          <li>
+            <div class="when">Apr 2025 – Present</div>
+            <h3>Physical Design Application Engineer</h3>
+            <p class="where">Synopsys · Hyderabad</p>
+            <p>Customer RTL-to-GDS implementation support. N5A in the queue. GSAE testcase. 30+ articles.</p>
+          </li>
+          <li>
+            <div class="when">Apr 2024 – Mar 2025</div>
+            <h3>Physical Design Intern</h3>
+            <p class="where">Synopsys · Hyderabad / Bhubaneswar</p>
+            <p>FC RTL-to-GDS training. DSO.ai on PVT Sensor IP. Converted to AE.</p>
+          </li>
+          <li>
+            <div class="when">2019 – 2023</div>
+            <h3>B.Tech, Electronics and Communications</h3>
+            <p class="where">Jaypee University of Engineering and Technology</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p class="intro">Hyderabad. Open to Physical Design, PD-CAD, and EDA application roles at product and EDA companies.</p>
+    <div class="contact-grid">
+      <a href="mailto:anirudhbhattaacharya@gmail.com">anirudhbhattaacharya@gmail.com</a>
+      <a href="https://linkedin.com/in/anirudhbhattacharya" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="Anirudh_Bhattacharya_Resume_PD.pdf" download>Resume PDF</a>
+    </div>
+  </section>
+  <footer>© 2026 Anirudh Bhattacharya</footer>
+  <script src="script.js"></script>
+</body>
+</html>
