@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anirudh Bhattacharya | Physical Design Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #ff6b35;
+            --accent: #7c3aed;
+            --dark: #0a0a0f;
+            --darker: #050507;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--dark), var(--darker));
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 15, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            position: relative;
+        }
+
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: floatIcon 15s linear infinite;
+        }
+
+        .floating-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 60%; right: 15%; animation-delay: 5s; }
+        .floating-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 10s; }
+        .floating-icon:nth-child(4) { top: 40%; right: 30%; animation-delay: 7s; }
+
+        @keyframes floatIcon {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 0.1; }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .project-subtitle {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+
+        .project-metrics {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 1rem 0.8rem;
+            min-height: 110px;
+            min-width: 120px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-sizing: border-box;
+        }
+
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--success);
+            display: block;
+            margin-bottom: 0.8rem;
+            line-height: 1.1;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: var(--gray);
+            line-height: 1.1;
+            text-align: center;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .timeline-date {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            width: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .project-metrics {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .metric {
+                min-width: 200px;
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-metrics {
+                gap: 0.5rem;
+            }
+
+            .metric {
+                min-width: 100px;
+                padding: 0.8rem 0.5rem;
+                min-height: 90px;
+            }
+
+            .metric-value {
+                font-size: 1rem;
+            }
+
+            .metric-label {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--secondary), var(--accent));
+        }
+
+        /* Contact Form Styles */
+        #contactForm input,
+        #contactForm textarea {
+            transition: all 0.3s ease;
+        }
+
+        #contactForm input:focus,
+        #contactForm textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        #contactForm input::placeholder,
+        #contactForm textarea::placeholder {
+            color: rgba(248, 250, 252, 0.6);
+        }
+
+        #contactForm button:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">Anirudh Bhattacharya</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contributions">Contributions</a></li>
+                <li><a href="#publications">Notes</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section id="home" class="hero">
+        <div class="floating-elements">
+            <i class="fas fa-microchip floating-icon"></i>
+            <i class="fas fa-code floating-icon"></i>
+            <i class="fas fa-cogs floating-icon"></i>
+            <i class="fas fa-laptop-code floating-icon"></i>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Anirudh Bhattacharya</h1>
+            <p class="hero-subtitle">Physical Design Application Engineer @ Synopsys</p>
+            <p class="hero-description">
+                Fusion Compiler and ICC2 on live customer ASIC and SoC blocks.
+                Floorplan, placement, CTS, PnR, UPF, MCMM STA, IR/EM, Calibre DRC/LVS.
+                TSMC N5A and Intel 18A / IFS18A are in that queue.
+                A Qualcomm PnR fail became a GSAE testcase other PD teams reused.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                <button id="downloadResumeBtn" class="btn btn-accent">
+                    <i class="fas fa-download"></i> Download Resume
+                </button>
+            </div>
+        </div>
+    </section>
+    <section id="about" class="section">
+        <h2 class="section-title fade-in">About Me</h2>
+        <div class="about-grid">
+            <div class="about-text fade-in">
+                <p><strong>Physical Design Application Engineer at Synopsys, Hyderabad, since April 2025.</strong> Started as a PD intern. Finished Fusion Compiler RTL-to-GDS training. Ran DSO.ai on SLM PVT Monitor IP at Intel 18A / IFS18A. Converted to AE.</p>
+                <p>I have not owned a product tapeout. Day to day I take the same breaks a PD team hits when compile, constraints, CTS, route or UPF fail. Close the ticket. Write the SolvNet note when the fail will come back. One Qualcomm debug became a reusable GSAE testcase.</p>
+                <p>100+ Fusion Compiler and ICC2 cases. Q1 2026: 16 cases, empty backlog, about 10.8 days to close. Q2 2026: 30+ cases, about 11 days. Excellence Award, March 2026. B.Tech ECE, Jaypee University of Engineering and Technology, CGPA 7.4.</p>
+            </div>
+            <div class="about-stats fade-in">
+                <div class="stat-card"><span class="stat-number">100+</span><span class="stat-label">FC / ICC2 Cases</span></div>
+                <div class="stat-card"><span class="stat-number">N5A</span><span class="stat-label">TSMC + IFS18A</span></div>
+                <div class="stat-card"><span class="stat-number">30+</span><span class="stat-label">SolvNet Articles</span></div>
+                <div class="stat-card"><span class="stat-number">2026</span><span class="stat-label">Excellence Award</span></div>
+            </div>
+        </div>
+    </section>
+    <section id="skills" class="section">
+        <h2 class="section-title fade-in">Technical Expertise</h2>
+        <div class="skills-grid">
+            <div class="skill-category fade-in"><h3><i class="fas fa-microchip"></i> EDA Tools</h3><div class="skill-tags"><span class="skill-tag">Fusion Compiler</span><span class="skill-tag">ICC2</span><span class="skill-tag">PrimeTime</span><span class="skill-tag">Design Compiler</span><span class="skill-tag">DSO.ai</span><span class="skill-tag">Calibre</span></div></div>
+            <div class="skill-category fade-in"><h3><i class="fas fa-cogs"></i> Physical Design</h3><div class="skill-tags"><span class="skill-tag">Floorplan</span><span class="skill-tag">PDN</span><span class="skill-tag">Placement</span><span class="skill-tag">Legalization</span><span class="skill-tag">CTS / MSCTS</span><span class="skill-tag">PnR</span><span class="skill-tag">STA / MCMM</span><span class="skill-tag">UPF</span><span class="skill-tag">IR / EM</span><span class="skill-tag">DRC / LVS</span></div></div>
+            <div class="skill-category fade-in"><h3><i class="fas fa-code"></i> Scripting</h3><div class="skill-tags"><span class="skill-tag">Tcl</span><span class="skill-tag">Python</span><span class="skill-tag">Perl</span><span class="skill-tag">Make</span><span class="skill-tag">Verilog</span><span class="skill-tag">Linux</span></div></div>
+            <div class="skill-category fade-in"><h3><i class="fas fa-layer-group"></i> Nodes</h3><div class="skill-tags"><span class="skill-tag">TSMC N5A</span><span class="skill-tag">TSMC 40ULP</span><span class="skill-tag">Intel 18A / IFS18A</span><span class="skill-tag">SLM PVT Monitor IP</span></div></div>
+        </div>
+    </section>
+    <section id="projects" class="section">
+        <h2 class="section-title fade-in">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card fade-in"><div class="project-header"><h3 class="project-title">Qualcomm PnR GSAE Testcase</h3><p class="project-subtitle">Fusion Compiler · gsaetc_fc_command_trace</p></div><div class="project-content"><p class="project-description">Live Qualcomm PnR needed a clean command history from placement, CTS and route. log_trace plus sh_command_log_file. Reduced to a runnable ORCA testcase with README and checks in run.tcl. Other PD and AE teams reused it.</p><div class="project-tech"><span class="tech-tag">Fusion Compiler</span><span class="tech-tag">Tcl</span><span class="tech-tag">GSAE</span></div><div class="project-metrics"><div class="metric"><div class="metric-value">Reused</div><div class="metric-label">by PD / AE teams</div></div><div class="metric"><div class="metric-value">Mar 2026</div><div class="metric-label">Excellence Award</div></div></div></div></div>
+            <div class="project-card fade-in"><div class="project-header"><h3 class="project-title">Legalizer Callback Testcase</h3><p class="project-subtitle">place.legalize.prelegal_tcl_callback_command</p></div><div class="project-content"><p class="project-description">Forced CMD-005 by pointing the pre-legalizer callback at an unknown command, then cleared the option and showed legalization recover. Same method as a customer fail: reproduce, isolate the app option, prove the fix.</p><div class="project-tech"><span class="tech-tag">Legalizer</span><span class="tech-tag">Tcl</span><span class="tech-tag">FC / ICC2</span></div><div class="project-metrics"><div class="metric"><div class="metric-value">CMD-005</div><div class="metric-label">reproduced then cleared</div></div><div class="metric"><div class="metric-value">2</div><div class="metric-label">GSAE-style testcases</div></div></div></div></div>
+            <div class="project-card fade-in"><div class="project-header"><h3 class="project-title">Customer PnR Queue</h3><p class="project-subtitle">FC · ICC2 · PrimeTime · Calibre</p></div><div class="project-content"><p class="project-description">100+ production tickets. Compile and flatten, CTS and CCD, placement and legalizer, route and via ladder, UPF split-fanout, PVT mismatch, bufferability, Calibre LVS. Product teams at TSMC N5A, 40ULP, 180G and Intel 18A / IFS18A.</p><div class="project-tech"><span class="tech-tag">CTS</span><span class="tech-tag">UPF</span><span class="tech-tag">STA</span></div><div class="project-metrics"><div class="metric"><div class="metric-value">100+</div><div class="metric-label">cases closed</div></div><div class="metric"><div class="metric-value">~11d</div><div class="metric-label">avg close Q1/Q2</div></div></div></div></div>
+            <div class="project-card fade-in"><div class="project-header"><h3 class="project-title">DSO.ai on SLM PVT Monitor IP</h3><p class="project-subtitle">Intel 18A / IFS18A</p></div><div class="project-content"><p class="project-description">Internship block. DSO.ai with Fusion Compiler on process detector, voltage monitor and temperature sensor macros. Timing, power and block-level QoR. Converted to AE in April 2025.</p><div class="project-tech"><span class="tech-tag">DSO.ai</span><span class="tech-tag">Fusion Compiler</span><span class="tech-tag">IFS18A</span></div><div class="project-metrics"><div class="metric"><div class="metric-value">Apr 2025</div><div class="metric-label">converted to AE</div></div><div class="metric"><div class="metric-value">18A</div><div class="metric-label">IFS18A</div></div></div></div></div>
+        </div>
+    </section>
+    <section id="contributions" class="section">
+        <h2 class="section-title fade-in">Technical Contributions</h2>
+        <div class="projects-grid">
+            <div class="project-card fade-in"><div class="project-header"><h3 class="project-title">Queue families</h3><p class="project-subtitle">What the tickets actually were</p></div><div class="project-content"><p class="project-description">compile_fusion and flatten. clock_opt, MSCTS crash, create_clock_skew_group vs set_clock_balance_points, CCD / useful skew, NDR on leaf clocks, FC vs ICC2 skew. poly_rule on N5A, magnet placement, legalizer variant swap, IP-edge congestion. hyper_route_opt, via ladder, off-grid M2, Calibre LVS. UPF always-on split fanout, PVT mismatch, toggle-rate power.</p><div class="project-tech"><span class="tech-tag">CTS</span><span class="tech-tag">Legalize</span><span class="tech-tag">Route</span><span class="tech-tag">UPF</span></div></div></div>
+            <div class="project-card fade-in"><div class="project-header"><h3 class="project-title">Tcl I wrote</h3><p class="project-subtitle">ECO · boundary · command trace</p></div><div class="project-content"><p class="project-description">ECO displacement CSV after set_attribute eco_change_status = create_cell and place_eco_cells -eco_changed_cells. Cells outside core using boundary plus ray-casting instead of bbox. Qualcomm command-trace extraction with sh_command_log_file, log_trace and logsum.html.</p><div class="project-tech"><span class="tech-tag">Tcl</span><span class="tech-tag">ECO</span><span class="tech-tag">log_trace</span></div></div></div>
+            <div class="project-card fade-in"><div class="project-header"><h3 class="project-title">SolvNetPlus articles</h3><p class="project-subtitle">Published titles from the same queue</p></div><div class="project-content"><p class="project-description">CTS balancing and clock skew group pins. CCD prepone / postpone limits. IP-edge congestion. DRC convergence in compile_fusion. Antenna and diode insert. Crosstalk on reg2out. Unconstrained ICG paths DC vs PrimeTime. 24 published titles. Bodies stay off this page.</p><div class="project-tech"><span class="tech-tag">SolvNetPlus</span><span class="tech-tag">CTS</span><span class="tech-tag">STA</span></div></div></div>
+            <div class="project-card fade-in"><div class="project-header"><h3 class="project-title">Accounts in the queue</h3><p class="project-subtitle">Product and foundry teams</p></div><div class="project-content"><p class="project-description">Samsung, Qualcomm Shanghai, MediaTek, Micron, SK hynix, Intel Technology India, Microsoft, Marvell, NXP, Arm, STMicroelectronics, Toshiba, Sony, GlobalFoundries, SiFive, SemiFive, Novatek, Nuvoton, SiMa.ai, Xcelerium, Tenstorrent, ScaleFlux, HCL, Wipro, Chipus, MIPS and others. Training labs left off.</p><div class="project-tech"><span class="tech-tag">FC</span><span class="tech-tag">ICC2</span></div></div></div>
+        </div>
+    </section>
+    <section id="publications" class="section">
+        <h2 class="section-title fade-in">Customer Notes</h2>
+        <div class="projects-grid">
+            <div class="project-card fade-in"><div class="project-content"><p class="project-description">The output command file is the one I expected. Thanks a lot for your support on this.</p><p class="project-subtitle">Qualcomm Shanghai · January 2026</p></div></div>
+            <div class="project-card fade-in"><div class="project-content"><p class="project-description">Thanks for the answers. It is clear now. Thanks to close the call.</p><p class="project-subtitle">Microsoft · July 2026</p></div></div>
+            <div class="project-card fade-in"><div class="project-content"><p class="project-description">Thank you for your help. It is very helpful to me. Please this case can be closed.</p><p class="project-subtitle">Samsung Electronics · August 2026</p></div></div>
+            <div class="project-card fade-in"><div class="project-content"><p class="project-description">Issue is solved. Can you please close the ticket. Thank you for the support.</p><p class="project-subtitle">HCL · July 2026</p></div></div>
+            <div class="project-card fade-in"><div class="project-content"><p class="project-description">Thank you for your help. It runs ok now. Please feel free to close this case.</p><p class="project-subtitle">ScaleFlux · May 2026</p></div></div>
+            <div class="project-card fade-in"><div class="project-content"><p class="project-description">Sure please go ahead and close the case. Thank you very much.</p><p class="project-subtitle">SiMa.ai · June 2026</p></div></div>
+            <div class="project-card fade-in"><div class="project-content"><p class="project-description">Thanks for the explanation! You can close the ticket.</p><p class="project-subtitle">Chipus · June 2026</p></div></div>
+        </div>
+    </section>
+    <section id="experience" class="section">
+        <h2 class="section-title fade-in">Professional Journey</h2>
+        <div class="timeline fade-in">
+            <div class="timeline-item"><div class="timeline-date">Apr 2025 to present</div><h3 class="timeline-title">Physical Design Application Engineer</h3><div class="timeline-company">Synopsys Inc., Hyderabad</div><p>Customer PnR on Fusion Compiler and ICC2. Floorplan, CTS, routing, MCMM STA, UPF, IR/EM, Calibre. Qualcomm GSAE testcase. TSMC N5A and Intel 18A / IFS18A. 100+ cases. 30+ SolvNet articles.</p></div>
+            <div class="timeline-item"><div class="timeline-date">Apr 2024 to Mar 2025</div><h3 class="timeline-title">Physical Design Intern</h3><div class="timeline-company">Synopsys Inc., Hyderabad / Bhubaneswar</div><p>Fusion Compiler RTL-to-GDS training. DSO.ai on SLM PVT Monitor IP at Intel 18A / IFS18A. Converted to AE.</p></div>
+            <div class="timeline-item"><div class="timeline-date">May 2022 to Feb 2023</div><h3 class="timeline-title">VLSI Trainee, Physical Design</h3><div class="timeline-company">VLSI Expert Private Limited, Noida</div><p>picorv32a from Verilog through floorplan, PDN, CTS, PnR and STA in ICC2 and PrimeTime.</p></div>
+            <div class="timeline-item"><div class="timeline-date">2019 to 2023</div><h3 class="timeline-title">B.Tech, Electronics and Communications</h3><div class="timeline-company">Jaypee University of Engineering and Technology · CGPA 7.4</div></div>
+        </div>
+    </section>
+    <section id="contact" class="section">
+        <h2 class="section-title fade-in">Let's Connect</h2>
+        <div class="contact-grid">
+            <div class="contact-info fade-in">
+                <div class="contact-item"><i class="fas fa-envelope contact-icon"></i><div><h4>Email</h4><p>anirudhbhattaacharya@gmail.com</p></div></div>
+                <div class="contact-item"><i class="fas fa-building contact-icon"></i><div><h4>Company</h4><p>Synopsys Inc.</p></div></div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt contact-icon"></i><div><h4>Location</h4><p>Hyderabad, Telangana</p></div></div>
+                <div class="contact-item"><i class="fas fa-briefcase contact-icon"></i><div><h4>Position</h4><p>Physical Design Application Engineer</p></div></div>
+                <div class="contact-item"><i class="fas fa-graduation-cap contact-icon"></i><div><h4>Education</h4><p>B.Tech ECE (CGPA 7.4)</p></div></div>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/anirudhbhattacharya" class="social-link" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.credly.com/users/anirudhbhattacharya/badges/credly" class="social-link" target="_blank" rel="noopener"><i class="fas fa-certificate"></i></a>
+                    <a href="Anirudh_Bhattacharya_Resume_PD.pdf" class="social-link"><i class="fas fa-file-pdf"></i></a>
+                </div>
+            </div>
+            <div class="fade-in">
+                <h3 style="margin-bottom: 2rem; color: var(--primary);">Send Me a Message</h3>
+                <form id="contactForm" action="https://formsubmit.co/anirudhbhattaacharya@gmail.com" method="POST" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="Portfolio contact">
+                    <div style="margin-bottom: 1.5rem;"><input type="text" id="name" name="name" placeholder="Your Name" required style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: var(--light); font-size: 1rem; font-family: 'Space Grotesk', sans-serif;"></div>
+                    <div style="margin-bottom: 1.5rem;"><input type="email" id="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: var(--light); font-size: 1rem; font-family: 'Space Grotesk', sans-serif;"></div>
+                    <div style="margin-bottom: 1.5rem;"><input type="text" id="subject" name="subject" placeholder="Subject" required style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: var(--light); font-size: 1rem; font-family: 'Space Grotesk', sans-serif;"></div>
+                    <div style="margin-bottom: 1.5rem;"><textarea id="message" name="message" placeholder="Your Message" rows="6" required style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: var(--light); font-size: 1rem; font-family: 'Space Grotesk', sans-serif; resize: vertical;"></textarea></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fas fa-paper-plane"></i> Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <footer style="text-align:center;padding:2rem;color:var(--gray);border-top:1px solid rgba(255,255,255,.1);">Anirudh Bhattacharya · Physical Design · 2026</footer>
+    <script>
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Typing effect for hero subtitle
+        const subtitle = document.querySelector('.hero-subtitle');
+        const text = subtitle.textContent;
+        subtitle.textContent = '';
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Start typing effect after page load
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Add interactive hover effects to project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) rotateX(5deg)';
+                this.style.boxShadow = '0 25px 50px rgba(0, 212, 255, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateX(0deg)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Parallax effect for floating icons
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.floating-icon');
+            
+            parallax.forEach((icon, index) => {
+                const speed = 0.5 + (index * 0.1);
+                icon.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+
+        
+        document.querySelectorAll('#contactForm input, #contactForm textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            input.addEventListener('blur', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        const resumeBtn = document.getElementById('downloadResumeBtn');
+        if (resumeBtn) {
+            resumeBtn.addEventListener('click', function() {
+                window.location.href = 'Anirudh_Bhattacharya_Resume_PD.pdf';
+            });
+        }
+
+    </script>
+</body>
+</html>
